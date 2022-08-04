@@ -8,23 +8,24 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div id="app">
+  <div id="app" v-cloak>
     <div class="box intro">
       <img src="image/huemul.png" alt="Huemul DevsChile" height="250">
       <h1>{{ title }}</h1>
-      <p><a href="https://tally.so/r/meqEOE">Link encuesta</a></p>
-      <p>Total: {{ total }} respuestas</p>
-      {{ Object.keys(questions) }}
+      <p><a href="https://tally.so/r/meqEOE">Link</a> | Total: {{ total }} respuestas</p>
+      <ul class="questions">
+        <li v-for="question in Object.keys(questions)">{{ question }}</li>
+      </ul>
     </div>
     <div class="box">
       <h2>{{ Object.keys(questions)[0] }}</h2>
       {{ answers[0] }}
-      <chartjs-doughnut :labels=["Mujer","Hombre","Otro"] :data="[24,155,1]"></chartjs-doughnut>
+      <chartjs-doughnut :labels="['Mujer','Hombre','Otro']" :data="[24,155,1]"></chartjs-doughnut>
     </div>
     <div class="box">
       <h2>{{ Object.keys(questions)[1] }}</h2>
       {{ answers[1] }}
-        <chartjs-doughnut :labels=["17-","18-24","25-34","35-44","45-54","55+"] :data="[,8,110,59,3,]"></chartjs-doughnut>
+        <chartjs-doughnut :labels="['17-','18-24','25-34','35-44','45-54','55+']" :data="[,8,110,59,3,]"></chartjs-doughnut>
     </div>
     <div class="box">
       <h2>{{ Object.keys(questions)[2] }}</h2>
@@ -71,6 +72,25 @@
         ></chartjs-doughnut>
     </div>
     <div class="box">
+      <h2>{{ Object.keys(questions)[6] }}</h2>
+        <chartjs-bar 
+        :labels="[
+          'Desarrollador Full-stack', 
+          'Tech lead / Manager', 
+          'DevOps', 
+          'Desarrollador Back-end', 
+          'Desarrollador Front-end', 
+          'QA', 
+          'Otro', 
+          'SysAdmin', 
+          'CTO/CEO/CFO/COO', 
+          'Diseñador',
+          'Desarrollador Mobile',
+        ]" 
+        :data="[64, 32, 112, 177, 113, 14, 5, 31, 29, 55, 33]"
+        ></chartjs-bar>
+    </div>
+    <div class="box">
       <h2>{{ Object.keys(questions)[7] }}</h2>
       <small>{{ answers[7] }}</small>
         <chartjs-bar 
@@ -84,8 +104,10 @@
           'SysAdmin',
           'CTO/CEO/CFO/COO',
           'Diseñador', 
+          'QA',
+          'Desarrollador Mobile',
         ]" 
-        :data="[48,35,12,22,31,20,1,6,5]"
+        :data="[48,35,12,22,31,20,1,6,5,,]"
         ></chartjs-pie>
     </div>
     <div class="box">
@@ -131,13 +153,6 @@
       },
       methods: {
         findCoincidents(obj, key, value) {
-          // let output = ''
-          // if (value) {
-          //   output = `${key} (${value}): ${obj.filter(a => a[key] === value).length}`
-          // } else {
-          //   output = `${key} (Total): ${obj.filter(a => a[key]).length}`
-          // }
-          // return output
           let output = []
           return obj.filter(a => a[key] === value).length
         },
@@ -146,7 +161,7 @@
           const answers = [] 
 
           unique.forEach(el => {
-            answers.push(`${el}: ${this.findCoincidents(obj, key, el)}`)
+            answers.push(el)
           })
           return answers
         },
@@ -156,22 +171,11 @@
             .then(data => {
               this.total = data.answers.length
               this.questions = data.questions
-              const question = '¿Estudiaste en un bootcamp?'
-              // this.questions['¿Cuál es tu género?'] = this.findCoincidents(data.data, '¿Cuál es tu género?')
-              // console.log('findCoincidents', this.findCoincidents(data.answers, '¿Cuál es tu género?', 'Hombre'))
-              //console.log('buildCoincidents', this.buildCoincidents(data.answers, '¿Cuál es tu género?'))
-              
-              // this.answers.push(this.buildCoincidents(data.answers, '¿Cuál es tu género?'))
-              // this.answers.push(this.buildCoincidents(data.answers, '¿Cuál es tu rango de edad?'))
-              // this.answers.push(this.buildCoincidents(data.answers, '¿Estudiaste en un bootcamp?'))
-              
+
               Object.keys(this.questions).forEach(name => {
                 this.answers.push(this.buildCoincidents(data.answers, name))
               })
-              
-              // console.log(this.findCoincidents(data, '¿Dominas otro idioma hablado/escrito aparte del español?', 'Si'))
-              // console.log(this.findCoincidents(data, '¿Dominas otro idioma hablado/escrito aparte del español?', 'No'))
-              // console.log(this.findCoincidents(data, '¿Cuál es tu género?'))
+              console.log(this.answers[6])
             }
           )
         }

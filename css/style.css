@@ -1,3 +1,7 @@
+[v-cloak] {
+  display: none;
+}
+
 body {
   font-family: 'Source Sans Pro', sans-serif;
   text-align: center;
@@ -21,4 +25,8 @@ body {
 .box canvas {
   background: transparent url('../image/trust.png') center center no-repeat;
   background-size: 10%;
+}
+
+.questions {
+  text-align: left;
 }
