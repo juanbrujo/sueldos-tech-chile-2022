@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <script src="//variancecharts.com/cdn/variance-noncommercial-standalone-f47ffcf.min.js"></script>
+  <link id="sales" rel="variance-data" href="data/sales.csv">
+  <link id="traffic" rel="variance-data" href="data/traffic.csv">
+  <link id="sueldo-devs" rel="variance-data" href="data/sueldo-devs.csv">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  
+<div id="population_age">
+  <div class="title">
+    <div class="asia region">
+      <div class="total_population">4,165.44 million</div>
+      <h2>Asia</h2>
+      <div class="total_population">5,164.06 million</div>
+    </div>
+    <!-- <div class="africa region">
+      <div class="total_population">1,031.08 million</div>
+      <h2>Africa</h2>
+      <div class="total_population">2,393.17 million</div>
+    </div>
+    <div class="europe region">
+      <div class="total_population">740.30 million</div>
+      <h2>Europe</h2>
+      <div class="total_population">709.06 million</div>
+    </div>
+    <div class="legend">
+      <div class="total_population">2010</div>
+      <h2>Population</h2>
+      <div class="total_population">2050</div>
+    </div> -->
+  </div>
+
+  <chart scale-y-linear="0 16">
+    <div class="legend">
+      <!-- <h3>Percentage of Total Population Divided by Age</h3> -->
+      <div class="year">
+        <div class="ten"></div>
+        <span class="text">2017</span>
+      </div>
+      <div class="year">
+        <div class="fifty"></div>
+        <span class="text">2022</span>
+      </div>
+    </div>
+    <guide-y>
+      <span class="label">{{value}}%</span>
+    </guide-y>
+    <groups by="Year" data="#sueldo-devs" class="asia">
+      <repeat>
+        <bar map-length="percentage_of_pop"></bar>
+        <annotation class="bottom">
+          <span class="rotate">{{Age}}</span>
+        </annotation>
+      </repeat>
+    </groups>
+    <!-- <groups by="Year" data="#pop_age_africa" class="africa">
+      <repeat>
+        <bar map-length="percentage_of_pop"></bar>
+        <annotation class="bottom">
+          <span class="rotate">{{Age}}</span>
+        </annotation>
+      </repeat>
+    </groups>
+    <groups by="Year" data="#pop_age_europe" class="europe">
+      <repeat>
+        <bar map-length="percentage_of_pop"></bar>
+        <annotation class="bottom">
+          <span class="rotate">{{Age}}</span>
+        </annotation>
+      </repeat>
+    </groups> -->
+  </chart>
+</div>
+
+<div id="bar">
+  <h3>Quarterly Sales, By Region</h3>
+  <chart data="#sales"
+         map-length="sales"
+         scale-y-linear="0 900">
+    <guide-y></guide-y>
+    <repeat>
+      <bar></bar>
+      <annotation class="bottom">
+        {{quarter}}<br>{{region}}
+      </annotation>
+    </repeat>
+  </chart>
+</div>
+
+<div id="line-multiple">
+  <h3>Traffic Deaths Per 100,000 Persons, 1951-1959</h3>
+  <chart data="#traffic"
+         map-xy="year total"
+         scale-x-linear="2017 2022"
+         scale-y-linear="6 16">
+    <guide-y></guide-y>
+    <guide-x></guide-x>
+    <groups by="state">
+      <line></line>
+    </groups>
+    <groups by="state">
+      <points></points>
+    </groups>
+    <annotation data-total="12.9"
+                data-year="2017">NY</annotation>
+    <annotation data-total="10"
+                data-year="2022">CT</annotation>
+  </chart>
+</div>
+
+</body>
+</html>

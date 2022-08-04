@@ -1,0 +1,24 @@
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  text-align: center;
+  font-size: 1.4em;
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.box {
+  padding: 50px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 50px;
+  height: 90vh;
+}
+
+.box canvas {
+  background: transparent url('../image/trust.png') center center no-repeat;
+  background-size: 10%;
+}
